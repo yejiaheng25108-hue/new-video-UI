@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐾 毛绒怪兽视频解析 🐾</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="world-container">
+        <div class="parallax-layer" data-depth="0.1">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+        </div>
+
+        <div class="main-stage">
+            <header class="fluffy-header">
+                <h1 class="plush-text">视频喂食计划</h1>
+                <div class="cinema-switch" id="cinema-toggle" title="影院模式">
+                    <div class="switch-track">
+                        <div class="switch-knob">💡</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="video-stage-wrapper">
+                <div class="plush-frame">
+                    <div class="screen-glass">
+                        <iframe id="video-player" src="" allowfullscreen></iframe>
+                        <div class="standby-screen">
+                            <div class="monster-eyes">
+                                <div class="eye left">
+                                    <div class="pupil"></div>
+                                </div>
+                                <div class="eye right">
+                                    <div class="pupil"></div>
+                                </div>
+                            </div>
+                            <p>我饿了... 给我视频...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="monster-input-container">
+                <div class="monster-mouth">
+                    <div class="teeth top"></div>
+                    <div class="teeth bottom"></div>
+                    <div class="input-wrapper">
+                        <input type="text" id="video-url" placeholder="喂我视频链接..." autocomplete="off">
+                    </div>
+                    <div id="monster-toast" class="monster-toast hidden">
+                        <div class="toast-avatar">👾</div>
+                        <div class="toast-message"></div>
+                    </div>
+                </div>
+
+                <div class="controls-bar">
+                    <div class="source-toggle" id="source-toggle">
+                        <span class="label-left active">虾米</span>
+                        <div class="icon">🦐</div>
+                        <span class="label-right">咸鱼</span>
+                    </div>
+                    <button id="play-btn" class="action-btn">喂食！</button>
+                    <button id="paste-btn" class="action-btn secondary">粘贴</button>
+                    <button id="clear-btn" class="action-btn secondary">清空</button>
+                </div>
+            </div>
+
+            <div class="history-panel">
+                <h3>📜 消化记录</h3>
+                <ul id="history-list" class="history-list">
+                    <!-- History items will be injected here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
