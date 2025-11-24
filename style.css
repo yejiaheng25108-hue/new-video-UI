@@ -881,8 +881,9 @@ body.dark-mode .switch-knob {
         /* Hide side panels on very small screens to keep it clean */
     }
 }
+
 /* Rock Paper Scissors Game */
-. game-card {
+.game-card {
     animation: cardFloat 3.5s ease-in-out infinite;
 }
 
@@ -940,8 +941,15 @@ body.dark-mode .switch-knob {
 }
 
 @keyframes cardFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
 }
 
 /* Dark Mode Optimizations */
