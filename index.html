@@ -17,68 +17,131 @@
         <div class="parallax-layer" data-depth="0.1">
             <div class="floating-shape shape-1"></div>
             <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3">🍿</div>
+            <div class="floating-shape shape-4">🥤</div>
+            <div class="floating-shape shape-5">🦴</div>
         </div>
 
-        <div class="main-stage">
-            <header class="fluffy-header">
-                <h1 class="plush-text">视频喂食计划</h1>
-                <div class="cinema-switch" id="cinema-toggle" title="影院模式">
-                    <div class="switch-track">
-                        <div class="switch-knob">💡</div>
+        <div class="stage-container">
+            <!-- Left Panel: Monster Status -->
+            <aside class="side-panel left-panel">
+                <div class="panel-card status-card">
+                    <h3>👾 怪兽状态</h3>
+                    <div class="status-item">
+                        <span class="status-label">饥饿值</span>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="hunger-bar" style="width: 80%;"></div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">心情</span>
+                        <div class="mood-display" id="mood-display">🤤 馋了</div>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">上次进食</span>
+                        <div class="time-display" id="last-fed-time">刚刚</div>
                     </div>
                 </div>
-            </header>
 
-            <div class="video-stage-wrapper">
-                <div class="plush-frame">
-                    <div class="screen-glass">
-                        <iframe id="video-player" src="" allowfullscreen></iframe>
-                        <div class="standby-screen">
-                            <div class="monster-eyes">
-                                <div class="eye left">
-                                    <div class="pupil"></div>
+                <div class="panel-card tips-card">
+                    <h3>💡 饲养指南</h3>
+                    <p>怪兽喜欢吃高清视频。如果它不开心，试着换个口味（虾米/咸鱼）！</p>
+                </div>
+            </aside>
+
+            <div class="main-stage">
+                <header class="fluffy-header">
+                    <h1 class="plush-text">视频喂食计划</h1>
+                    <div class="cinema-switch" id="cinema-toggle" title="影院模式">
+                        <div class="switch-track">
+                            <div class="switch-knob">💡</div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="video-stage-wrapper">
+                    <div class="plush-frame">
+                        <div class="screen-glass">
+                            <iframe id="video-player" src="" allowfullscreen></iframe>
+                            <div class="standby-screen">
+                                <div class="monster-eyes">
+                                    <div class="eye left">
+                                        <div class="pupil"></div>
+                                    </div>
+                                    <div class="eye right">
+                                        <div class="pupil"></div>
+                                    </div>
                                 </div>
-                                <div class="eye right">
-                                    <div class="pupil"></div>
-                                </div>
+                                <p>我饿了... 给我视频...</p>
                             </div>
-                            <p>我饿了... 给我视频...</p>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="monster-input-container">
-                <div class="monster-mouth">
-                    <div class="teeth top"></div>
-                    <div class="teeth bottom"></div>
-                    <div class="input-wrapper">
-                        <input type="text" id="video-url" placeholder="喂我视频链接..." autocomplete="off">
+                <div class="monster-input-container">
+                    <div class="monster-mouth">
+                        <div class="teeth top"></div>
+                        <div class="teeth bottom"></div>
+                        <div class="input-wrapper">
+                            <input type="text" id="video-url" placeholder="喂我视频链接..." autocomplete="off">
+                        </div>
+                        <div id="monster-toast" class="monster-toast hidden">
+                            <div class="toast-avatar">👾</div>
+                            <div class="toast-message"></div>
+                        </div>
                     </div>
-                    <div id="monster-toast" class="monster-toast hidden">
-                        <div class="toast-avatar">👾</div>
-                        <div class="toast-message"></div>
+
+                    <div class="controls-bar">
+                        <div class="source-toggle" id="source-toggle">
+                            <span class="label-left active">虾米</span>
+                            <div class="icon">🦐</div>
+                            <span class="label-right">咸鱼</span>
+                        </div>
+                        <button id="play-btn" class="action-btn">喂食！</button>
+                        <button id="paste-btn" class="action-btn secondary">粘贴</button>
+                        <button id="clear-btn" class="action-btn secondary">清空</button>
                     </div>
                 </div>
 
-                <div class="controls-bar">
-                    <div class="source-toggle" id="source-toggle">
-                        <span class="label-left active">虾米</span>
-                        <div class="icon">🦐</div>
-                        <span class="label-right">咸鱼</span>
-                    </div>
-                    <button id="play-btn" class="action-btn">喂食！</button>
-                    <button id="paste-btn" class="action-btn secondary">粘贴</button>
-                    <button id="clear-btn" class="action-btn secondary">清空</button>
+                <div class="history-panel">
+                    <h3>📜 消化记录</h3>
+                    <ul id="history-list" class="history-list">
+                        <!-- History items will be injected here -->
+                    </ul>
                 </div>
             </div>
 
-            <div class="history-panel">
-                <h3>📜 消化记录</h3>
-                <ul id="history-list" class="history-list">
-                    <!-- History items will be injected here -->
-                </ul>
-            </div>
+            <!-- Right Panel: Snack Pantry -->
+            <aside class="side-panel right-panel">
+                <div class="panel-card pantry-card">
+                    <h3>🍬 零食柜</h3>
+                    <div class="snack-grid">
+                        <a href="https://www.bilibili.com" target="_blank" class="snack-item" title="Bilibili">
+                            <span class="snack-icon">📺</span>
+                            <span class="snack-name">B站</span>
+                        </a>
+                        <a href="https://v.qq.com" target="_blank" class="snack-item" title="Tencent Video">
+                            <span class="snack-icon">🐧</span>
+                            <span class="snack-name">腾讯</span>
+                        </a>
+                        <a href="https://www.youku.com" target="_blank" class="snack-item" title="Youku">
+                            <span class="snack-icon">🎬</span>
+                            <span class="snack-name">优酷</span>
+                        </a>
+                        <a href="https://www.iqiyi.com" target="_blank" class="snack-item" title="iQiyi">
+                            <span class="snack-icon">🥝</span>
+                            <span class="snack-name">爱奇艺</span>
+                        </a>
+                    </div>
+                    <button id="random-snack-btn" class="action-btn small-btn" style="margin-top: 15px; width: 100%;">🎲
+                        随机口味</button>
+                </div>
+
+                <div class="panel-card ad-card">
+                    <h3>📢 怪兽广播</h3>
+                    <p>“最近听说《奥特曼》很好吃...”</p>
+                </div>
+            </aside>
         </div>
     </div>
 

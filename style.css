@@ -498,12 +498,189 @@ body.dark-mode .switch-knob {
 
 @keyframes bounce {
 
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
     50% {
         transform: translateY(-5px);
+    }
+}
+
+/* --- New Layout & Side Panels --- */
+
+.stage-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    width: 95%;
+    max-width: 1400px;
+    position: relative;
+    z-index: 10;
+}
+
+.side-panel {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 60px;
+    /* Align with main stage content */
+}
+
+.panel-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s;
+}
+
+.panel-card:hover {
+    transform: translateY(-5px);
+}
+
+.panel-card h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--color-dark);
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* Left Panel: Status */
+.status-item {
+    margin-bottom: 15px;
+}
+
+.status-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 12px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #FF6B6B, #FFC300);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.mood-display {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--color-dark);
+}
+
+.time-display {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Right Panel: Pantry */
+.snack-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.snack-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    padding: 15px 10px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: var(--color-dark);
+    transition: all 0.2s;
+    border: 2px solid transparent;
+}
+
+.snack-item:hover {
+    background: #fff;
+    border-color: var(--color-fur-secondary);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.snack-icon {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.snack-name {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.small-btn {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+}
+
+/* New Floating Shapes */
+.shape-3 {
+    font-size: 3rem;
+    top: 60%;
+    left: 15%;
+    animation: float 7s ease-in-out infinite 1s;
+}
+
+.shape-4 {
+    font-size: 2.5rem;
+    top: 15%;
+    right: 20%;
+    animation: float 5s ease-in-out infinite 2s;
+}
+
+.shape-5 {
+    font-size: 2rem;
+    bottom: 10%;
+    right: 5%;
+    animation: float 9s ease-in-out infinite;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .stage-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .side-panel {
+        width: 100%;
+        max-width: 700px;
+        padding-top: 0;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .panel-card {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .order-first-mobile {
+        order: -1;
+        /* If we want status on top */
+    }
+}
+
+@media (max-width: 768px) {
+    .side-panel {
+        display: none;
+        /* Hide side panels on very small screens to keep it clean */
     }
 }

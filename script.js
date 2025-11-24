@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         addToHistory(url);
         showToast('正在吞噬视频... 嗝~');
+        feedMonster();
     });
 
     // Cinema Mode
@@ -163,6 +164,86 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loadHistory();
+
+    // --- Hunger & Mood Logic ---
+    let hunger = 80; // 0-100
+    let lastFed = Date.now();
+    const hungerBar = document.getElementById('hunger-bar');
+    const moodDisplay = document.getElementById('mood-display');
+    const lastFedDisplay = document.getElementById('last-fed-time');
+
+    function updateStatus() {
+        // Decrease hunger over time
+        const now = Date.now();
+        const diff = (now - lastFed) / 1000 / 60; // minutes
+
+        // Simple decay: -1 hunger every minute
+        // For demo purposes, let's make it faster: -1 every 10 seconds
+        // In real app: hunger -= diff * rate;
+
+        // Update UI
+        hungerBar.style.width = `${hunger}%`;
+
+        if (hunger > 80) {
+            hungerBar.style.background = 'linear-gradient(90deg, #4ECDC4, #2ecc71)';
+            moodDisplay.textContent = '😋 超满足';
+        } else if (hunger > 50) {
+            hungerBar.style.background = 'linear-gradient(90deg, #FF6B6B, #FFC300)';
+            moodDisplay.textContent = '😐 还可以';
+        } else if (hunger > 20) {
+            hungerBar.style.background = 'linear-gradient(90deg, #e67e22, #d35400)';
+            moodDisplay.textContent = '🤤 馋了';
+        } else {
+            hungerBar.style.background = 'linear-gradient(90deg, #c0392b, #e74c3c)';
+            moodDisplay.textContent = '😫 饿扁了';
+        }
+
+        // Update time text
+        const secondsAgo = Math.floor((now - lastFed) / 1000);
+        if (secondsAgo < 60) {
+            lastFedDisplay.textContent = '刚刚';
+        } else if (secondsAgo < 3600) {
+            lastFedDisplay.textContent = `${Math.floor(secondsAgo / 60)}分钟前`;
+        } else {
+            lastFedDisplay.textContent = '很久以前';
+        }
+    }
+
+    // Loop to decrease hunger
+    setInterval(() => {
+        if (hunger > 0) {
+            hunger--;
+            updateStatus();
+        }
+    }, 5000); // Decrease every 5 seconds for demo
+
+    function feedMonster() {
+        hunger = Math.min(100, hunger + 30);
+        lastFed = Date.now();
+        updateStatus();
+
+        // Happy animation
+        monsterMouth.classList.add('eating');
+        setTimeout(() => monsterMouth.classList.remove('eating'), 1000);
+    }
+
+    // --- Random Snack Logic ---
+    const randomSnackBtn = document.getElementById('random-snack-btn');
+    const randomQueries = ['搞笑视频', '猫咪', '奥特曼', '美食教程', '科技评测', '我的世界', '原神'];
+
+    if (randomSnackBtn) {
+        randomSnackBtn.addEventListener('click', () => {
+            const query = randomQueries[Math.floor(Math.random() * randomQueries.length)];
+            videoUrlInput.value = `Searching for: ${query}...`;
+            showToast(`正在寻找${query}口味的零食...`);
+
+            // Simulate "finding" a link
+            setTimeout(() => {
+                videoUrlInput.value = `https://www.bilibili.com/search?keyword=${encodeURIComponent(query)}`;
+                showToast('找到了！快喂我！');
+            }, 1000);
+        });
+    }
 
     // --- Parallax Effect ---
     document.addEventListener('mousemove', (e) => {
