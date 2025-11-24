@@ -227,21 +227,67 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => monsterMouth.classList.remove('eating'), 1000);
     }
 
-    // --- Random Snack Logic ---
-    const randomSnackBtn = document.getElementById('random-snack-btn');
-    const randomQueries = ['搞笑视频', '猫咪', '奥特曼', '美食教程', '科技评测', '我的世界', '原神'];
+    // --- Rock Paper Scissors Game ---
+    const rpsButtons = document.querySelectorAll('.rps-btn');
+    const rpsResult = document.getElementById('rps-result');
 
-    if (randomSnackBtn) {
-        randomSnackBtn.addEventListener('click', () => {
-            const query = randomQueries[Math.floor(Math.random() * randomQueries.length)];
-            videoUrlInput.value = `Searching for: ${query}...`;
-            showToast(`正在寻找${query}口味的零食...`);
+    if (rpsButtons.length > 0) {
+        const choices = ['rock', 'paper', 'scissors'];
+        const emojis = { rock: '✊', paper: '✋', scissors: '✌️' };
 
-            // Simulate "finding" a link
-            setTimeout(() => {
-                videoUrlInput.value = `https://www.bilibili.com/search?keyword=${encodeURIComponent(query)}`;
-                showToast('找到了！快喂我！');
-            }, 1000);
+        let wins = 0;
+        let losses = 0;
+        let ties = 0;
+
+        function getWinner(player, monster) {
+            if (player === monster) return 'tie';
+            if (
+                (player === 'rock' && monster === 'scissors') ||
+                (player === 'paper' && monster === 'rock') ||
+                (player === 'scissors' && monster === 'paper')
+            ) {
+                return 'win';
+            }
+            return 'lose';
+        }
+
+        rpsButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const playerChoice = btn.getAttribute('data-choice');
+                const monsterChoice = choices[Math.floor(Math.random() * choices.length)];
+                const result = getWinner(playerChoice, monsterChoice);
+
+                // Animate button
+                btn.style.transform = 'scale(1.2)';
+                setTimeout(() => btn.style.transform = 'scale(1)', 200);
+
+                // Display result
+                let message = '';
+                if (result === 'win') {
+                    wins++;
+                    hunger = Math.min(100, hunger + 10);
+                    message = `🎉 你${emojis[playerChoice]} VS 怪兽${emojis[monsterChoice]} - 你赢了！`;
+                    showToast('哇！你赢了！怪兽请你吃零食！(+10)');
+                } else if (result === 'lose') {
+                    losses++;
+                    hunger = Math.max(0, hunger - 5);
+                    message = `😢 你${emojis[playerChoice]} VS 怪兽${emojis[monsterChoice]} - 你输了！`;
+                    showToast('呜呜...输了...怪兽要吃你的零食...(-5)');
+                } else {
+                    ties++;
+                    message = `🤝 你${emojis[playerChoice]} VS 怪兽${emojis[monsterChoice]} - 平局！`;
+                    showToast('平局！再战！');
+                }
+
+                rpsResult.textContent = message;
+                updateStatus();
+
+                if ((wins + losses + ties) % 5 === 0 && wins + losses + ties > 0) {
+                    setTimeout(() => {
+                        showToast(`战绩: ${wins}胜 ${losses}败 ${ties}平`);
+                    }, 1500);
+                }
+            });
         });
     }
 

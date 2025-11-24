@@ -881,3 +881,135 @@ body.dark-mode .switch-knob {
         /* Hide side panels on very small screens to keep it clean */
     }
 }
+/* Rock Paper Scissors Game */
+. game-card {
+    animation: cardFloat 3.5s ease-in-out infinite;
+}
+
+.rps-game {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.rps-choices {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.rps-btn {
+    width: 70px;
+    height: 70px;
+    font-size: 32px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rps-btn:hover {
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 0 8px 25px rgba(118, 75, 162, 0.6);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.rps-btn:active {
+    transform: scale(0.95);
+}
+
+.rps-result {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes cardFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+/* Dark Mode Optimizations */
+body.dark-mode .panel-card {
+    background: rgba(40, 40, 40, 0.9);
+    color: #e0e0e0;
+}
+
+body.dark-mode .panel-card h3 {
+    color: #ffffff;
+    border-bottom-color: #444;
+}
+
+body.dark-mode .status-label {
+    color: #aaa;
+}
+
+body.dark-mode .mood-display,
+body.dark-mode .time-display {
+    color: #e0e0e0;
+}
+
+body.dark-mode .history-panel {
+    background: rgba(40, 40, 40, 0.85);
+    color: #e0e0e0;
+}
+
+body.dark-mode .history-item {
+    border-bottom-color: #444;
+}
+
+body.dark-mode .history-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .history-time {
+    color: #999;
+}
+
+body.dark-mode .snack-item {
+    background: #333;
+    color: #e0e0e0;
+}
+
+body.dark-mode .snack-item:hover {
+    background: #444;
+    border-color: var(--color-fur-accent);
+}
+
+body.dark-mode .rps-result {
+    background: rgba(60, 60, 60, 0.8);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .tips-card p {
+    color: #ccc;
+}
+
+body.dark-mode .monster-broadcast {
+    background: rgba(40, 40, 40, 0.85);
+    color: #e0e0e0;
+}
+
+body.dark-mode .monster-broadcast h3 {
+    color: #ffffff;
+}
+
+body.dark-mode .monster-broadcast p {
+    color: #ccc;
+}
