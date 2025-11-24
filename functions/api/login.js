@@ -1,12 +1,11 @@
 // Login API endpoint
+// 从环境变量中读取配置，提高安全性
 const USERNAME = 'yejiaheng';
-const PASSWORD = 'yejiaheng25108';
 const COOKIE_NAME = 'monster_auth';
-const COOKIE_SECRET = 'monster_secret_key_12345';
 
-async function signCookie(value) {
+async function signCookie(value, secret) {
     const encoder = new TextEncoder();
-    const data = encoder.encode(value + COOKIE_SECRET);
+    const data = encoder.encode(value + secret);
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
@@ -14,7 +13,20 @@ async function signCookie(value) {
 }
 
 export async function onRequestPost(context) {
-    const { request } = context;
+    const { request, env } = context;
+
+    // 从环境变量中获取密钥和密码
+    const PASSWORD = env.MY_SECRET_PASS;
+    const COOKIE_SECRET = env.MY_SECRET_PASS;
+
+    if (!PASSWORD) {
+        return new Response(JSON.stringify({ success: false, error: 'Server configuration error' }), {
+            status: 500,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
 
     try {
         const body = await request.json();
@@ -22,7 +34,7 @@ export async function onRequestPost(context) {
 
         if (username === USERNAME && password === PASSWORD) {
             // Create signed cookie
-            const cookieValue = await signCookie('authenticated');
+            const cookieValue = await signCookie('authenticated', COOKIE_SECRET);
 
             return new Response(JSON.stringify({ success: true }), {
                 status: 200,
