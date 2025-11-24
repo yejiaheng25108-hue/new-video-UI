@@ -109,6 +109,10 @@
                         <!-- History items will be injected here -->
                     </ul>
                 </div>
+                <div class="monster-broadcast">
+                    <h3>📢 怪兽广播</h3>
+                    <p>“最近听说《奥特曼》很好吃...”</p>
+                </div>
             </div>
 
             <!-- Right Panel: Snack Pantry -->
@@ -116,30 +120,32 @@
                 <div class="panel-card pantry-card">
                     <h3>🍬 零食柜</h3>
                     <div class="snack-grid">
-                        <a href="https://www.bilibili.com" target="_blank" class="snack-item" title="Bilibili">
-                            <span class="snack-icon">📺</span>
+                        <a href="#" class="snack-item"
+                            onclick="document.getElementById('video-url').value='https://www.bilibili.com'; return false;">
+                            <img src="https://www.bilibili.com/favicon.ico" alt="Bilibili" class="snack-icon">
                             <span class="snack-name">B站</span>
                         </a>
-                        <a href="https://v.qq.com" target="_blank" class="snack-item" title="Tencent Video">
-                            <span class="snack-icon">🐧</span>
+                        <a href="#" class="snack-item"
+                            onclick="document.getElementById('video-url').value='https://v.qq.com'; return false;">
+                            <img src="https://v.qq.com/favicon.ico" alt="Tencent" class="snack-icon">
                             <span class="snack-name">腾讯</span>
                         </a>
-                        <a href="https://www.youku.com" target="_blank" class="snack-item" title="Youku">
-                            <span class="snack-icon">🎬</span>
+                        <a href="#" class="snack-item"
+                            onclick="document.getElementById('video-url').value='https://www.youku.com'; return false;">
+                            <img src="https://www.youku.com/favicon.ico" alt="Youku" class="snack-icon">
                             <span class="snack-name">优酷</span>
                         </a>
-                        <a href="https://www.iqiyi.com" target="_blank" class="snack-item" title="iQiyi">
-                            <span class="snack-icon">🥝</span>
+                        <a href="#" class="snack-item"
+                            onclick="document.getElementById('video-url').value='https://www.iqiyi.com'; return false;">
+                            <img src="https://www.iqiyi.com/favicon.ico" alt="iQiyi" class="snack-icon">
                             <span class="snack-name">爱奇艺</span>
                         </a>
                     </div>
-                    <button id="random-snack-btn" class="action-btn small-btn" style="margin-top: 15px; width: 100%;">🎲
-                        随机口味</button>
                 </div>
 
-                <div class="panel-card ad-card">
-                    <h3>📢 怪兽广播</h3>
-                    <p>“最近听说《奥特曼》很好吃...”</p>
+                <div class="panel-card random-card">
+                    <h3>🎲 随机投喂</h3>
+                    <button id="random-snack-btn" class="action-btn small-btn">来点惊喜</button>
                 </div>
             </aside>
         </div>
