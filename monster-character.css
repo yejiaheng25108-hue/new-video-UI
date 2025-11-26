@@ -1,0 +1,31 @@
+/* Monster Character Display in Status Card */
+.monster-character-display {
+    text-align: center;
+    padding: 15px 0;
+    margin-bottom: 15px;
+}
+
+#monster-character {
+    width: 120px;
+    height: auto;
+    display: inline-block;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+    animation: monsterFloat 3s ease-in-out infinite;
+}
+
+#monster-character:hover {
+    transform: scale(1.1);
+}
+
+@keyframes monsterFloat {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}

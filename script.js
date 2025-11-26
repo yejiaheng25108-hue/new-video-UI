@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => monsterMouth.style.transform = 'translateX(-10px)', 50);
             setTimeout(() => monsterMouth.style.transform = 'translateX(0)', 100);
             showToast('喂！嘴巴是空的！给我视频！');
+            updateMonsterCharacter('anger.png'); // 怪兽生气
             return;
         }
 
@@ -93,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         addToHistory(url);
         showToast('正在吞噬视频... 嗝~');
+        updateMonsterCharacter('eat-video.png'); // 怪兽吃视频
         feedMonster();
     });
 
@@ -103,9 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.body.classList.contains('dark-mode')) {
             knob.textContent = '🌙';
             showToast('嘘... 关灯睡觉觉...');
+            updateMonsterCharacter('sleep.png'); // 怪兽睡觉
         } else {
             knob.textContent = '💡';
             showToast('天亮了！起床找吃的！');
+            updateMonsterCharacter('happy.png'); // 怪兽醒来
         }
     });
 
@@ -177,26 +181,50 @@ document.addEventListener('DOMContentLoaded', () => {
         const now = Date.now();
         const diff = (now - lastFed) / 1000 / 60; // minutes
 
-        // Simple decay: -1 hunger every minute
-        // For demo purposes, let's make it faster: -1 every 10 seconds
-        // In real app: hunger -= diff * rate;
-
         // Update UI
         hungerBar.style.width = `${hunger}%`;
+
+        // 检查是否处于深色模式（睡觉状态）
+        if (document.body.classList.contains('dark-mode')) {
+            // 深色模式下不改变怪兽状态，保持睡觉
+            const secondsAgo = Math.floor((now - lastFed) / 1000);
+            if (secondsAgo < 60) {
+                lastFedDisplay.textContent = '刚刚';
+            } else if (secondsAgo < 3600) {
+                lastFedDisplay.textContent = `${Math.floor(secondsAgo / 60)}分钟前`;
+            } else {
+                lastFedDisplay.textContent = '很久以前';
+            }
+            return;
+        }
+
+        let monsterImage = 'happy.png'; // default image
 
         if (hunger > 80) {
             hungerBar.style.background = 'linear-gradient(90deg, #4ECDC4, #2ecc71)';
             moodDisplay.textContent = '😋 超满足';
+            monsterImage = 'happy.png';
         } else if (hunger > 50) {
             hungerBar.style.background = 'linear-gradient(90deg, #FF6B6B, #FFC300)';
             moodDisplay.textContent = '😐 还可以';
+            monsterImage = 'doubt.png';
         } else if (hunger > 20) {
             hungerBar.style.background = 'linear-gradient(90deg, #e67e22, #d35400)';
             moodDisplay.textContent = '🤤 馋了';
-        } else {
+            monsterImage = 'eat-video.png';
+        } else if (hunger > 10) {
             hungerBar.style.background = 'linear-gradient(90deg, #c0392b, #e74c3c)';
             moodDisplay.textContent = '😫 饿扁了';
+            monsterImage = 'anger.png';
+        } else {
+            // 饥饿值极低，怪兽生病
+            hungerBar.style.background = 'linear-gradient(90deg, #95a5a6, #7f8c8d)';
+            moodDisplay.textContent = '🤢 生病了';
+            monsterImage = 'ill.png';
         }
+
+        // Update monster character image
+        updateMonsterCharacter(monsterImage);
 
         // Update time text
         const secondsAgo = Math.floor((now - lastFed) / 1000);
@@ -206,6 +234,14 @@ document.addEventListener('DOMContentLoaded', () => {
             lastFedDisplay.textContent = `${Math.floor(secondsAgo / 60)}分钟前`;
         } else {
             lastFedDisplay.textContent = '很久以前';
+        }
+    }
+
+    // Update monster character image
+    function updateMonsterCharacter(imageName) {
+        const monsterCharacter = document.getElementById('monster-character');
+        if (monsterCharacter) {
+            monsterCharacter.src = `picture/${imageName}`;
         }
     }
 
@@ -268,11 +304,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     hunger = Math.min(100, hunger + 10);
                     message = `🎉 你${emojis[playerChoice]} VS 怪兽${emojis[monsterChoice]} - 你赢了！`;
                     showToast('哇！你赢了！怪兽请你吃零食！(+10)');
+                    updateMonsterCharacter('happy.png'); // 怪兽开心
                 } else if (result === 'lose') {
                     losses++;
                     hunger = Math.max(0, hunger - 5);
                     message = `😢 你${emojis[playerChoice]} VS 怪兽${emojis[monsterChoice]} - 你输了！`;
                     showToast('呜呜...输了...怪兽要吃你的零食...(-5)');
+                    updateMonsterCharacter('doubt.png'); // 怪兽疑惑
                 } else {
                     ties++;
                     message = `🤝 你${emojis[playerChoice]} VS 怪兽${emojis[monsterChoice]} - 平局！`;
