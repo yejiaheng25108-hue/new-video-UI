@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // State
     let currentApi = 'xm'; // 'xm' or 'xy'
     const apis = {
-        xm: 'https://jx.xmflv.com/?url=',
-        xy: 'https://jx.xymp4.cc/?url='
-    };
+    xm: 'https://jx.202617.xyz/tv.php?url=',   // 七哥解析（推荐）
+    xy: 'https://bd.jx.cn/?url='               // 冰豆解析
+};
 
     // --- Helper Functions ---
     function showToast(msg) {
